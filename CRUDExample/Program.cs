@@ -1,5 +1,12 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Service;
+using ServiceContracts;
+
+var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+
+// add services
+builder.Services.AddSingleton<ICountriesService, CountriesService>();
+builder.Services.AddSingleton<IPersonsService, PersonsService>();
 
 var app = builder.Build();
 
