@@ -158,7 +158,7 @@ namespace Service
 
         public List<PersonResponse> GetAllPersons()
         {
-            return _persons.Select(temp => temp.ToPersonResponse()).ToList();
+            return _persons.Select(temp => ConvertToPersonResponse(temp)).ToList();
         }
 
         public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
@@ -171,34 +171,34 @@ namespace Service
 
             switch (searchBy)
             {
-                case nameof(Person.PersonName):
+                case nameof(PersonResponse.PersonName):
                     matchingPersons = allPersons.Where(tmp => (!string.IsNullOrEmpty(tmp.PersonName) ? tmp.PersonName.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
-                case nameof(Person.Email):
+                case nameof(PersonResponse.Email):
                     matchingPersons = allPersons.Where(temp =>
                     (!string.IsNullOrEmpty(temp.Email) ?
                     temp.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
-                case nameof(Person.DateOfBirth):
+                case nameof(PersonResponse.DateOfBirth):
                     matchingPersons = allPersons.Where(temp =>
                     (temp.DateOfBirth != null) ?
                     temp.DateOfBirth.Value.ToString("dd MMMM yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase) : true).ToList();
                     break;
 
-                case nameof(Person.Gender):
+                case nameof(PersonResponse.Gender):
                     matchingPersons = allPersons.Where(temp =>
                     (!string.IsNullOrEmpty(temp.Gender) ?
                     temp.Gender.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
-                case nameof(Person.CountryID):
+                case nameof(PersonResponse.CountryID):
                     matchingPersons = allPersons.Where(temp =>
                     (!string.IsNullOrEmpty(temp.Country) ?
                     temp.Country.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
-                case nameof(Person.Address):
+                case nameof(PersonResponse.Address):
                     matchingPersons = allPersons.Where(temp =>
                     (!string.IsNullOrEmpty(temp.Address) ?
                     temp.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
@@ -219,7 +219,7 @@ namespace Service
             if (person == null)
                 return null;
 
-            return person.ToPersonResponse();
+            return ConvertToPersonResponse(person);
         }
 
         public List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder)
@@ -289,7 +289,7 @@ namespace Service
             matchingPerson.Address = personUpdateRequest.Address;
             matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
-            return matchingPerson.ToPersonResponse();
+            return ConvertToPersonResponse(matchingPerson);
         }
 
         public bool DeletePerson(Guid? personID)

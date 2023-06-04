@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<th>
+    @if (ViewBag.CurrentSearchBy == ViewBag.ColumnName)
+    {
+        SortOrderOptions sortOrder = SortOrderOptions.ASC;
+        string faIconClass = "fa-solid fa-sort-down";
+        if (ViewBag.CurrentSortOrder == SortOrderOptions.ASC.ToString())
+        {
+            sortOrder = SortOrderOptions.DESC;
+            faIconClass = "fa-solid fa-sort-up";
+        }
+        <a href="~/Persons/index?searchBy=@ViewBag.ColumnName&searchString=@ViewBag.CurrentSearchString&sortBy=@ViewBag.ColumnName&sortOrder=@sortOrder.ToString()">@ViewBag.DisplayName</a> <i class="@faIconClass"></i>
+    }
+    else
+    {
+<a href="~/Persons/index?searchBy=@ViewBag.ColumnName&searchString=@ViewBag.CurrentSearchString&sortBy=@ViewBag.ColumnName&sortOrder=@SortOrderOptions.DESC.ToString()">@ViewBag.DisplayName</a>
+    }
+</th>
