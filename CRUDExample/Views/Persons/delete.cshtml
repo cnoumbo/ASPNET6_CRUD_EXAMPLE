@@ -1,0 +1,49 @@
+@model PersonUpdateRequest
+@{
+    ViewBag.Title = "Create Person";
+}
+
+<a href="~/persons/index" class="link-hover">Back to Persons List</a>
+<h2>Delete Person</h2>
+<h3>Are you sure to delete this person ?</h3>
+
+<div class="center-box">
+    @if (ViewBag.ErrorNotification is not null)
+    {
+        <span class="text-red ml">
+            @ViewBag.ErrorNotification
+        </span>
+    }
+
+<form asp-controller="Persons" asp-action="Delete" asp-route-personID="@Model.PersonID" method="post">
+    @* PersonID *@
+    <input asp-for="PersonID" type="hidden" />
+
+    @* PersonName *@
+    <div class="form-field flex">
+        <div class="w-25">
+            <label asp-for="PersonName" class="form-label pt">Name</label>
+        </div>
+        <div class="flex-1">
+            <input asp-for="PersonName" class="form-input" readonly>
+        </div>
+    </div>
+    <div class="form-field flex">
+        <div class="w-25">
+            <label asp-for="Email" class="form-label pt">Email</label>
+        </div>
+        <div class="flex-1">
+            <input asp-for="Email" class="form-input" readonly>
+        </div>
+    </div>
+
+    @* Submit *@
+    <div class="form-field flex">
+        <div class="w-25">
+        </div>
+        <div class="flex-1">
+            <button class="button button-red-back">Delete</button>
+        </div>
+    </div>
+</form>
+</div>
