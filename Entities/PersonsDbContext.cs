@@ -24,12 +24,12 @@ namespace Entities
 
             // Seed data
             string CountriesJson = System.IO.File.ReadAllText("countries.json");
-            List<Country> countries = System.Text.Json.JsonSerializer.Deserialize<List<Country>>(CountriesJson);
+            List<Country>? countries = System.Text.Json.JsonSerializer.Deserialize<List<Country>>(CountriesJson);
             foreach (Country country in countries)
                 modelBuilder.Entity<Country>().HasData(country);
 
-            string PersonJson = System.IO.File.ReadAllText("persons.json");
-            List<Person> persons = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(PersonJson);
+            string PersonsJson = System.IO.File.ReadAllText("persons.json");
+            List<Person>? persons = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(PersonsJson);
             foreach (Person person in persons)
                 modelBuilder.Entity<Person>().HasData(person);
         }

@@ -42,7 +42,7 @@ namespace ServiceContracts.DTO
             {
                 PersonName = PersonName,
                 Email = Email,
-                DateOfBirth = DateOfBirth,
+                DateOfBirth = DateOfBirth != null ? DateOnly.FromDateTime(DateOfBirth.Value) : null,
                 Gender = Gender.ToString(),
                 CountryID = CountryID,
                 Address = Address,

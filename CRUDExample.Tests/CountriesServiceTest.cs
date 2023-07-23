@@ -10,10 +10,11 @@ namespace CRUDExample.Tests
 		private readonly ICountriesService _countriesService;
 
 		// Constructor
-		public CountriesServiceTest()
+		public CountriesServiceTest(ICountriesService countriesService)
 		{
-			_countriesService = new CountriesService();
-		}
+			_countriesService = countriesService;
+
+        }
 
 		#region AddCountry
 		// When CountryAddRequest is null, it should throw ArgumentNullException

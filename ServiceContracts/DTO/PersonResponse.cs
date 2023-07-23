@@ -38,7 +38,7 @@ namespace ServiceContracts.DTO
                 PersonName = PersonName,
                 Email = Email,
                 DateOfBirth = DateOfBirth,
-                Gender = (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender.ToString(), true),
+                Gender = Gender != null ? (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender.ToString(), true) : null,
                 Address = Address,
                 CountryID = CountryID,
                 ReceiveNewsLetters = ReceiveNewsLetters
@@ -66,12 +66,12 @@ namespace ServiceContracts.DTO
                 PersonID = person.PersonID,
                 PersonName = person.PersonName,
                 Email = person.Email,
-                DateOfBirth = person.DateOfBirth,
+                DateOfBirth = person.DateOfBirth != null ? person.DateOfBirth.Value.ToDateTime(TimeOnly.Parse("00:00 AM")) : null,
                 ReceiveNewsLetters = person.ReceiveNewsLetters,
                 Address = person.Address,
                 CountryID = person.CountryID,
                 Gender = person.Gender,
-                Age = (person.DateOfBirth != null) ? Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25) : null
+                Age = (person.DateOfBirth != null) ? (Math.Round((DateTime.Now - person.DateOfBirth.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))).TotalDays / 365.25)) : null
             };
         }
     }

@@ -10,6 +10,6 @@ public class Country
     [Key]
     public Guid CountryID { get; set; }
     [StringLength(50)]
-    public string CountryName { get; set; }
+    public string? CountryName { get; set; }
 }
 

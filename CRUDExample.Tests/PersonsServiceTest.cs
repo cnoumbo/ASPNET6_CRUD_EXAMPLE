@@ -13,10 +13,10 @@ namespace CRUDExample.Tests
 		private readonly ICountriesService _countriesService;
 		private readonly ITestOutputHelper _testOutputHelper;
 
-		public PersonsServiceTest(ITestOutputHelper testOutputHelper)
+		public PersonsServiceTest(ITestOutputHelper testOutputHelper, IPersonsService personsService, ICountriesService countriesService)
 		{
-			_personsService = new PersonsService();
-			_countriesService = new CountriesService();
+			_personsService = personsService;
+			_countriesService = countriesService;
 			_testOutputHelper = testOutputHelper;
 		}
 
