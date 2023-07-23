@@ -1,3 +1,6 @@
+# hide migrations
+CRUDExample/Migrations/
+
 # globs
 Makefile.in
 *.userprefs
