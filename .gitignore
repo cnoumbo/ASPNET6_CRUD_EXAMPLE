@@ -1,5 +1,5 @@
 # hide migrations
-CRUDExample/Migrations/
+./CRUDExample/Migrations/
 
 # globs
 Makefile.in

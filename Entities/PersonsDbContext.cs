@@ -19,8 +19,8 @@ namespace Entities
             base.OnModelCreating(modelBuilder);
 
             // Configure dtabase table name
-            modelBuilder.Entity<Person>().ToTable("Persons");
-            modelBuilder.Entity<Country>().ToTable("Countries");
+            modelBuilder.Entity<Person>().ToTable("persons");
+            modelBuilder.Entity<Country>().ToTable("countries");
 
             // Seed data
             string CountriesJson = System.IO.File.ReadAllText("countries.json");
@@ -32,6 +32,12 @@ namespace Entities
             List<Person>? persons = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(PersonsJson);
             foreach (Person person in persons)
                 modelBuilder.Entity<Person>().HasData(person);
+        }
+
+        public List<Person> sp_GetAllPersons()
+        {
+            var persons = Persons.FromSqlRaw("Call get_all_persons();").ToList();
+            return persons;
         }
     }
 }

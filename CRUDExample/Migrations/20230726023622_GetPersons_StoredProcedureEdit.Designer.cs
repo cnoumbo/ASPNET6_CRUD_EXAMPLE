@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CRUDExample.Migrations
 {
     [DbContext(typeof(PersonsDbContext))]
-    [Migration("20230722235901_Initial")]
-    partial class Initial
+    [Migration("20230726023622_GetPersons_StoredProcedureEdit")]
+    partial class GetPersons_StoredProcedureEdit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,13 +32,12 @@ namespace CRUDExample.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CountryName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.HasKey("CountryID");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("countries", (string)null);
 
                     b.HasData(
                         new
@@ -101,7 +100,7 @@ namespace CRUDExample.Migrations
 
                     b.HasKey("PersonID");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("persons", (string)null);
 
                     b.HasData(
                         new

@@ -46,8 +46,10 @@ namespace Service
 
         public List<PersonResponse> GetAllPersons()
         {
-            return _db.Persons.ToList()
-                .Select(temp => ConvertToPersonResponse(temp)).ToList();
+            //return _db.Persons.ToList()
+            //    .Select(temp => ConvertToPersonResponse(temp)).ToList();
+            return _db.sp_GetAllPersons().
+                Select(ConvertToPersonResponse).ToList();
         }
 
         public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)

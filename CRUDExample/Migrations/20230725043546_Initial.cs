@@ -14,19 +14,19 @@ namespace CRUDExample.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "countries",
                 columns: table => new
                 {
                     CountryID = table.Column<Guid>(type: "uuid", nullable: false),
-                    CountryName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    CountryName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.CountryID);
+                    table.PrimaryKey("PK_countries", x => x.CountryID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "persons",
                 columns: table => new
                 {
                     PersonID = table.Column<Guid>(type: "uuid", nullable: false),
@@ -40,11 +40,11 @@ namespace CRUDExample.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.PersonID);
+                    table.PrimaryKey("PK_persons", x => x.PersonID);
                 });
 
             migrationBuilder.InsertData(
-                table: "Countries",
+                table: "countries",
                 columns: new[] { "CountryID", "CountryName" },
                 values: new object[,]
                 {
@@ -56,7 +56,7 @@ namespace CRUDExample.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Persons",
+                table: "persons",
                 columns: new[] { "PersonID", "Address", "CountryID", "DateOfBirth", "Email", "Gender", "PersonName", "ReceiveNewsLetters" },
                 values: new object[,]
                 {
@@ -79,10 +79,10 @@ namespace CRUDExample.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "countries");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "persons");
         }
     }
 }
