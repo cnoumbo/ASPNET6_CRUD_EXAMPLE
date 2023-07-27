@@ -40,13 +40,13 @@ namespace ServiceContracts.DTO
         {
             return new Person()
             {
-                PersonName = PersonName,
-                Email = Email,
-                DateOfBirth = DateOfBirth != null ? DateOnly.FromDateTime(DateOfBirth.Value) : null,
-                Gender = Gender.ToString(),
-                CountryID = CountryID,
-                Address = Address,
-                ReceiveNewsLetters = ReceiveNewsLetters
+                person_name = PersonName,
+                email = Email,
+                date_of_birth = DateOfBirth != null ? DateOnly.FromDateTime(DateOfBirth.Value) : null,
+                gender = Gender.ToString(),
+                country_id = CountryID,
+                address = Address,
+                receive_newsletters = ReceiveNewsLetters
             };
         }
     }

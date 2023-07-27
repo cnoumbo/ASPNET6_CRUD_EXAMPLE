@@ -63,15 +63,15 @@ namespace ServiceContracts.DTO
             // Person => convert => PersonResponse
             return new PersonResponse()
             {
-                PersonID = person.PersonID,
-                PersonName = person.PersonName,
-                Email = person.Email,
-                DateOfBirth = person.DateOfBirth != null ? person.DateOfBirth.Value.ToDateTime(TimeOnly.Parse("00:00 AM")) : null,
-                ReceiveNewsLetters = person.ReceiveNewsLetters,
-                Address = person.Address,
-                CountryID = person.CountryID,
-                Gender = person.Gender,
-                Age = (person.DateOfBirth != null) ? (Math.Round((DateTime.Now - person.DateOfBirth.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))).TotalDays / 365.25)) : null
+                PersonID = person.person_id,
+                PersonName = person.person_name,
+                Email = person.email,
+                DateOfBirth = person.date_of_birth != null ? person.date_of_birth.Value.ToDateTime(TimeOnly.Parse("00:00 AM")) : null,
+                ReceiveNewsLetters = person.receive_newsletters,
+                Address = person.address,
+                CountryID = person.country_id,
+                Gender = person.gender,
+                Age = (person.date_of_birth != null) ? (Math.Round((DateTime.Now - person.date_of_birth.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))).TotalDays / 365.25)) : null
             };
         }
     }

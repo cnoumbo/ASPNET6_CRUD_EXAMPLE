@@ -9,26 +9,26 @@ namespace Entities
 	public class Person
 	{
 		[Key]
-		public Guid PersonID { get; set; }
+		public Guid person_id { get; set; }
 
 		[StringLength(40)]
-		public string? PersonName { get; set; }
+		public string? person_name { get; set; }
 
 		[StringLength(50)]
-		public string? Email { get; set; }
+		public string? email { get; set; }
 
 		[DataType(DataType.Date)]
-		public DateOnly? DateOfBirth { get; set; }
+		public DateOnly? date_of_birth { get; set; }
 
 		[StringLength(10)]
-		public string? Gender { get; set; }
+		public string? gender { get; set; }
 
-		public Guid? CountryID { get; set; }
+		public Guid? country_id { get; set; }
 
 		[StringLength(200)]
-		public string? Address { get; set; }
+		public string? address { get; set; }
 
-		public bool ReceiveNewsLetters { get; set; }
+		public bool receive_newsletters { get; set; }
 	}
 }
 

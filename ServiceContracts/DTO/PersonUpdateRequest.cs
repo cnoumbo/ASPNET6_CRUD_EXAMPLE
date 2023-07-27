@@ -38,7 +38,7 @@ namespace ServiceContracts.DTO
         /// <returns>Returns Person object</returns>
         public Person ToPerson()
         {
-            return new Person() { PersonID = PersonID, PersonName = PersonName, Email = Email, DateOfBirth = DateOfBirth != null ? DateOnly.FromDateTime(DateOfBirth.Value) : null, Gender = Gender.ToString(), Address = Address, CountryID = CountryID, ReceiveNewsLetters = ReceiveNewsLetters };
+            return new Person() { person_id = PersonID, person_name = PersonName, email = Email, date_of_birth = DateOfBirth != null ? DateOnly.FromDateTime(DateOfBirth.Value) : null, gender = Gender.ToString(), address = Address, country_id = CountryID, receive_newsletters = ReceiveNewsLetters };
         }
     }
 }

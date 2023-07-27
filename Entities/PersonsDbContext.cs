@@ -36,7 +36,7 @@ namespace Entities
 
         public List<Person> sp_GetAllPersons()
         {
-            var persons = Persons.FromSqlRaw("Call get_all_persons();").ToList();
+            var persons = Persons.FromSqlRaw("select * from sp_get_all_persons_func();").ToList();
             return persons;
         }
     }

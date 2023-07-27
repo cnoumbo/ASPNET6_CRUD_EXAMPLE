@@ -24,14 +24,14 @@ namespace Service
                 throw new ArgumentException(nameof(countryAddRequest.CountryName));
 
             // Validation: CountryName can't be duplicate
-            if (_db.Countries.Where(tmp => tmp.CountryName == countryAddRequest.CountryName).Count() > 0)
+            if (_db.Countries.Where(tmp => tmp.country_name == countryAddRequest.CountryName).Count() > 0)
                 throw new ArgumentException("Given country name already exists");
 
             // Convert object from CountryAddRequest to Country type
             Country country = countryAddRequest.ToCountry();
 
             // Generate CountryID
-            country.CountryID = Guid.NewGuid();
+            country.country_id = Guid.NewGuid();
 
             // Everything is Okay
             _db.Countries.Add(country);
@@ -52,7 +52,7 @@ namespace Service
             if (countryID == null)
                 return null;
 
-            Country? country = _db.Countries.FirstOrDefault(tmp => tmp.CountryID == countryID);
+            Country? country = _db.Countries.FirstOrDefault(tmp => tmp.country_id == countryID);
 
             if (country == null)
                 return null;

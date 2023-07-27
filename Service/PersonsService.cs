@@ -20,7 +20,7 @@ namespace Service
         private PersonResponse ConvertToPersonResponse(Person person)
         {
             PersonResponse personResponse = person.ToPersonResponse();
-            personResponse.Country = _countriesService.GetCountryByCountryID(person.CountryID)?.CountryName;
+            personResponse.Country = _countriesService.GetCountryByCountryID(person.country_id)?.CountryName;
             return personResponse;
         }
 
@@ -36,7 +36,7 @@ namespace Service
 
             // convert PersonAddRequest into Person type
             Person person = personAddRequest.ToPerson();
-            person.PersonID = Guid.NewGuid();
+            person.person_id = Guid.NewGuid();
             _db.Persons.Add(person);
 
             _db.SaveChanges();
@@ -46,13 +46,13 @@ namespace Service
 
         public List<PersonResponse> GetAllPersons()
         {
-            //return _db.Persons.ToList()
-            //    .Select(temp => ConvertToPersonResponse(temp)).ToList();
-            return _db.sp_GetAllPersons().
-                Select(ConvertToPersonResponse).ToList();
+                //return _db.Persons.ToList()
+                //    .Select(temp => ConvertToPersonResponse(temp)).ToList();
+                return _db.sp_GetAllPersons().
+                    Select(ConvertToPersonResponse).ToList();
         }
 
-        public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
+    public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
         {
             List<PersonResponse> allPersons = GetAllPersons();
             List<PersonResponse> matchingPersons = allPersons;
@@ -106,7 +106,7 @@ namespace Service
             if (personID == null)
                 return null;
 
-            Person? person = _db.Persons.FirstOrDefault(tmp => tmp.PersonID == personID);
+            Person? person = _db.Persons.FirstOrDefault(tmp => tmp.person_id == personID);
             if (person == null)
                 return null;
 
@@ -167,18 +167,18 @@ namespace Service
             ValidationHelper.ModelValidation(personUpdateRequest);
 
             // get marching person object to update
-            Person? matchingPerson = _db.Persons.First(tmp => tmp.PersonID == personUpdateRequest.PersonID);
+            Person? matchingPerson = _db.Persons.First(tmp => tmp.person_id == personUpdateRequest.PersonID);
             if (matchingPerson == null)
                 throw new ArgumentException("Given person id doesn't exist");
 
             // Update all details
-            matchingPerson.PersonName = personUpdateRequest.PersonName;
-            matchingPerson.Email = personUpdateRequest.Email;
-            matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth != null ? DateOnly.FromDateTime(personUpdateRequest.DateOfBirth.Value) : null;
-            matchingPerson.Gender = personUpdateRequest.Gender.ToString();
-            matchingPerson.CountryID = personUpdateRequest.CountryID;
-            matchingPerson.Address = personUpdateRequest.Address;
-            matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+            matchingPerson.person_name = personUpdateRequest.PersonName;
+            matchingPerson.email = personUpdateRequest.Email;
+            matchingPerson.date_of_birth = personUpdateRequest.DateOfBirth != null ? DateOnly.FromDateTime(personUpdateRequest.DateOfBirth.Value) : null;
+            matchingPerson.gender = personUpdateRequest.Gender.ToString();
+            matchingPerson.country_id = personUpdateRequest.CountryID;
+            matchingPerson.address = personUpdateRequest.Address;
+            matchingPerson.receive_newsletters = personUpdateRequest.ReceiveNewsLetters;
 
             _db.SaveChanges();
 
@@ -190,7 +190,7 @@ namespace Service
             if (personID == null)
                 throw new ArgumentNullException(nameof(personID));
 
-            Person? person = _db.Persons.FirstOrDefault(tmp => tmp.PersonID == personID);
+            Person? person = _db.Persons.FirstOrDefault(tmp => tmp.person_id == personID);
             if (person == null)
                 return false;
 

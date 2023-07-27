@@ -5,28 +5,28 @@
 namespace CRUDExample.Migrations
 {
     /// <inheritdoc />
-    public partial class GetPersons_StoredProcedure : Migration
+    public partial class GetPersons_StoredProcedure2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Witre Stored Procedure
-            string sp_GetAppPersons = @"
-                create procedure get_all_persons()
+            string sp_query = @"
+                create or replace function sp_get_all_persons_func()
+                returns setof persons
                 language sql
                 as $$
                     select * from persons;
                 $$;
             ";
-            migrationBuilder.Sql(sp_GetAppPersons);
+            migrationBuilder.Sql(sp_query);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             // Delete Stored Procedure
-            string sp_GetAppPersons = @"drop procedure get_all_persons();";
-            migrationBuilder.Sql(sp_GetAppPersons);
+            string sp_query = @"drop function sp_get_all_persons_func();";
+            migrationBuilder.Sql(sp_query);
         }
     }
 }

@@ -1,21 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Entities;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace CRUDExample.Migrations
 {
     /// <inheritdoc />
-    public partial class GetPersons_StoredProcedureEdit : Migration
+    public partial class GetPersons_StoredProcedure : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             // Witre Stored Procedure
             string sp_GetAppPersons = @"
-                create or replace procedure get_all_persons()
+                create procedure get_all_persons()
                 language sql
                 as $$
-                    select * from public.persons;
+                    select * from persons;
                 $$;
             ";
             migrationBuilder.Sql(sp_GetAppPersons);
@@ -24,7 +25,9 @@ namespace CRUDExample.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            // Delete Stored Procedure
+            string sp_GetAppPersons = @"drop procedure get_all_persons();";
+            migrationBuilder.Sql(sp_GetAppPersons);
         }
     }
 }
