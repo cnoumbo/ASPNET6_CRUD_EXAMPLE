@@ -71,7 +71,8 @@ namespace ServiceContracts.DTO
                 Address = person.address,
                 CountryID = person.country_id,
                 Gender = person.gender,
-                Age = (person.date_of_birth != null) ? (Math.Round((DateTime.Now - person.date_of_birth.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))).TotalDays / 365.25)) : null
+                Age = (person.date_of_birth != null) ? (Math.Round((DateTime.Now - person.date_of_birth.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))).TotalDays / 365.25)) : null,
+                Country = person.country?.country_name
             };
         }
     }

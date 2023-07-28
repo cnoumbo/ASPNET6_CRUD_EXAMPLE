@@ -11,5 +11,7 @@ public class Country
     public Guid country_id { get; set; }
     [StringLength(50)]
     public string? country_name { get; set; }
+
+    public virtual ICollection<Person>? persons { get; set; }
 }
 

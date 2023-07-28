@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using Service.Helpers;
 using ServiceContracts;
 using ServiceContracts.DTO;
@@ -15,13 +16,6 @@ namespace Service
         {
             _db = db;
             _countriesService = countriesService;
-        }
-
-        private PersonResponse ConvertToPersonResponse(Person person)
-        {
-            PersonResponse personResponse = person.ToPersonResponse();
-            personResponse.Country = _countriesService.GetCountryByCountryID(person.country_id)?.CountryName;
-            return personResponse;
         }
 
         public PersonResponse AddPerson(PersonAddRequest? personAddRequest)
@@ -41,15 +35,17 @@ namespace Service
             _db.SaveChanges();
             //_db.sp_InsertPerson(person);
 
-            return ConvertToPersonResponse(person);
+            return person.ToPersonResponse();
         }
 
         public List<PersonResponse> GetAllPersons()
         {
-                return _db.Persons.ToList()
-                    .Select(temp => ConvertToPersonResponse(temp)).ToList();
-                //return _db.sp_GetAllPersons().
-                //    Select(ConvertToPersonResponse).ToList();
+            var persons = _db.Persons.Include("country").ToList();
+
+            return _db.Persons.ToList()
+                .Select(t => t.ToPersonResponse()).ToList();
+            //return _db.sp_GetAllPersons().
+            //    Select(ConvertToPersonResponse).ToList();
         }
 
         public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
@@ -110,7 +106,7 @@ namespace Service
             if (person == null)
                 return null;
 
-            return ConvertToPersonResponse(person);
+            return person.ToPersonResponse();
         }
 
         public List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder)
@@ -187,7 +183,7 @@ namespace Service
 
             //_db.sp_UpdatePerson(person);
 
-            return ConvertToPersonResponse(person);
+            return person.ToPersonResponse();
         }
 
         public bool DeletePerson(Guid? personID)
