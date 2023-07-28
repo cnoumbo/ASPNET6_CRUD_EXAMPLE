@@ -52,7 +52,7 @@ namespace Service
                     Select(ConvertToPersonResponse).ToList();
         }
 
-    public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
+        public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
         {
             List<PersonResponse> allPersons = GetAllPersons();
             List<PersonResponse> matchingPersons = allPersons;
@@ -171,18 +171,23 @@ namespace Service
             if (matchingPerson == null)
                 throw new ArgumentException("Given person id doesn't exist");
 
+            // Convert PersonUpdate to Person
+            var person = personUpdateRequest.ToPerson();
+
             // Update all details
-            matchingPerson.person_name = personUpdateRequest.PersonName;
-            matchingPerson.email = personUpdateRequest.Email;
-            matchingPerson.date_of_birth = personUpdateRequest.DateOfBirth != null ? DateOnly.FromDateTime(personUpdateRequest.DateOfBirth.Value) : null;
-            matchingPerson.gender = personUpdateRequest.Gender.ToString();
-            matchingPerson.country_id = personUpdateRequest.CountryID;
-            matchingPerson.address = personUpdateRequest.Address;
-            matchingPerson.receive_newsletters = personUpdateRequest.ReceiveNewsLetters;
+            //matchingPerson.person_name = personUpdateRequest.PersonName;
+            //matchingPerson.email = personUpdateRequest.Email;
+            //matchingPerson.date_of_birth = personUpdateRequest.DateOfBirth != null ? DateOnly.FromDateTime(personUpdateRequest.DateOfBirth.Value) : null;
+            //matchingPerson.gender = personUpdateRequest.Gender.ToString();
+            //matchingPerson.country_id = personUpdateRequest.CountryID;
+            //matchingPerson.address = personUpdateRequest.Address;
+            //matchingPerson.receive_newsletters = personUpdateRequest.ReceiveNewsLetters;
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
-            return ConvertToPersonResponse(matchingPerson);
+            _db.sp_UpdatePerson(person);
+
+            return ConvertToPersonResponse(person);
         }
 
         public bool DeletePerson(Guid? personID)
@@ -194,9 +199,10 @@ namespace Service
             if (person == null)
                 return false;
 
-            _db.Persons.Remove(person);
+            //_db.Persons.Remove(person);
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
+            _db.sp_DeletePerson(personID.Value);
 
             return true;
         }

@@ -54,6 +54,25 @@ namespace Entities
                 new NpgsqlParameter("@receive_newsletters", person.receive_newsletters)
             );
         }
+
+        public void sp_UpdatePerson(Person person)
+        {
+            Database.ExecuteSqlRaw("Call sp_update_person_proc(@person_id, @person_name, @email, @date_of_birth, @gender, @country_id, @address, @receive_newsletters)",
+                new NpgsqlParameter("@person_id", person.person_id),
+                new NpgsqlParameter("@person_name", person.person_name),
+                new NpgsqlParameter("@email", person.email),
+                new NpgsqlParameter("@date_of_birth", person.date_of_birth),
+                new NpgsqlParameter("@gender", person.gender),
+                new NpgsqlParameter("@country_id", person.country_id),
+                new NpgsqlParameter("@address", person.address ?? String.Empty),
+                new NpgsqlParameter("@receive_newsletters", person.receive_newsletters)
+            );
+        }
+
+        public void sp_DeletePerson(Guid guid)
+        {
+            Database.ExecuteSqlRaw("Call sp_delete_person_proc(@person_id)", new NpgsqlParameter("@person_id", guid));
+        }
     }
 }
 
