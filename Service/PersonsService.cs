@@ -37,9 +37,9 @@ namespace Service
             // convert PersonAddRequest into Person type
             Person person = personAddRequest.ToPerson();
             person.person_id = Guid.NewGuid();
-            _db.Persons.Add(person);
-
-            _db.SaveChanges();
+            //_db.Persons.Add(person);
+            //_db.SaveChanges();
+            _db.sp_InsertPerson(person);
 
             return ConvertToPersonResponse(person);
         }
