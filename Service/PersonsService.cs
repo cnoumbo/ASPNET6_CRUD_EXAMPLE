@@ -37,19 +37,19 @@ namespace Service
             // convert PersonAddRequest into Person type
             Person person = personAddRequest.ToPerson();
             person.person_id = Guid.NewGuid();
-            //_db.Persons.Add(person);
-            //_db.SaveChanges();
-            _db.sp_InsertPerson(person);
+            _db.Persons.Add(person);
+            _db.SaveChanges();
+            //_db.sp_InsertPerson(person);
 
             return ConvertToPersonResponse(person);
         }
 
         public List<PersonResponse> GetAllPersons()
         {
-                //return _db.Persons.ToList()
-                //    .Select(temp => ConvertToPersonResponse(temp)).ToList();
-                return _db.sp_GetAllPersons().
-                    Select(ConvertToPersonResponse).ToList();
+                return _db.Persons.ToList()
+                    .Select(temp => ConvertToPersonResponse(temp)).ToList();
+                //return _db.sp_GetAllPersons().
+                //    Select(ConvertToPersonResponse).ToList();
         }
 
         public List<PersonResponse> GetFilteredPersons(string? searchBy, string? searchString)
@@ -175,17 +175,17 @@ namespace Service
             var person = personUpdateRequest.ToPerson();
 
             // Update all details
-            //matchingPerson.person_name = personUpdateRequest.PersonName;
-            //matchingPerson.email = personUpdateRequest.Email;
-            //matchingPerson.date_of_birth = personUpdateRequest.DateOfBirth != null ? DateOnly.FromDateTime(personUpdateRequest.DateOfBirth.Value) : null;
-            //matchingPerson.gender = personUpdateRequest.Gender.ToString();
-            //matchingPerson.country_id = personUpdateRequest.CountryID;
-            //matchingPerson.address = personUpdateRequest.Address;
-            //matchingPerson.receive_newsletters = personUpdateRequest.ReceiveNewsLetters;
+            matchingPerson.person_name = personUpdateRequest.PersonName;
+            matchingPerson.email = personUpdateRequest.Email;
+            matchingPerson.date_of_birth = personUpdateRequest.DateOfBirth != null ? DateOnly.FromDateTime(personUpdateRequest.DateOfBirth.Value) : null;
+            matchingPerson.gender = personUpdateRequest.Gender.ToString();
+            matchingPerson.country_id = personUpdateRequest.CountryID;
+            matchingPerson.address = personUpdateRequest.Address;
+            matchingPerson.receive_newsletters = personUpdateRequest.ReceiveNewsLetters;
 
-            //_db.SaveChanges();
+            _db.SaveChanges();
 
-            _db.sp_UpdatePerson(person);
+            //_db.sp_UpdatePerson(person);
 
             return ConvertToPersonResponse(person);
         }
@@ -199,10 +199,10 @@ namespace Service
             if (person == null)
                 return false;
 
-            //_db.Persons.Remove(person);
+            _db.Persons.Remove(person);
 
-            //_db.SaveChanges();
-            _db.sp_DeletePerson(personID.Value);
+            _db.SaveChanges();
+            //_db.sp_DeletePerson(personID.Value);
 
             return true;
         }
