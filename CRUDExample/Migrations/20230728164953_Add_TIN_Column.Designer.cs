@@ -3,6 +3,7 @@ using System;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CRUDExample.Migrations
 {
     [DbContext(typeof(PersonsDbContext))]
-    partial class PersonsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230728164953_Add_TIN_Column")]
+    partial class Add_TIN_Column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,8 +74,7 @@ namespace CRUDExample.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("TIN")
-                        .HasColumnType("varchar(8)")
-                        .HasColumnName("tax_identification_number");
+                        .HasColumnType("text");
 
                     b.Property<string>("address")
                         .HasMaxLength(200)
@@ -101,10 +103,7 @@ namespace CRUDExample.Migrations
 
                     b.HasKey("person_id");
 
-                    b.ToTable("persons", null, t =>
-                        {
-                            t.HasCheckConstraint("CHK_TIN", "len(tax_identification_number) = 8");
-                        });
+                    b.ToTable("persons", (string)null);
 
                     b.HasData(
                         new

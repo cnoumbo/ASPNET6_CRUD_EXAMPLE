@@ -32,6 +32,15 @@ namespace Entities
             List<Person>? persons = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(PersonsJson);
             foreach (Person person in persons)
                 modelBuilder.Entity<Person>().HasData(person);
+
+            // Fluent API
+            // Edit column_name and column_type
+            modelBuilder.Entity<Person>().Property(t => t.TIN)
+                .HasColumnName("tax_identification_number")
+                .HasColumnType("varchar(8)");
+            // Add Column constraint
+            modelBuilder.Entity<Person>()
+                .HasCheckConstraint("CHK_TIN", "length(tax_identification_number) = 8");
         }
 
         public List<Person> sp_GetAllPersons()
