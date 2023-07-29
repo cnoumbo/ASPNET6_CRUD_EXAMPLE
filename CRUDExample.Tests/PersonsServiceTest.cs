@@ -24,21 +24,21 @@ namespace CRUDExample.Tests
 
 		// When we supply nulll value as PersonAddRequest, it should thorw ArgumentNullException
 		[Fact]
-		public void AddPerson_NullPerson()
+		public async Task AddPerson_NullPerson()
 		{
 			// Arrange
 			PersonAddRequest? request = null;
 
 			// Assert
-			Assert.Throws<ArgumentNullException>(() =>
+			await Assert.ThrowsAsync<ArgumentNullException>(async () =>
 			{
-				_personsService.AddPerson(request);
+				await _personsService.AddPerson(request);
 			});
 		}
 
 		// When you supply null value as prsonName, it should throw ArgumentException
 		[Fact]
-		public void AddPerson_PersonNameIsNull()
+		public async Task AddPerson_PersonNameIsNull()
 		{
 			// Arrange
 			PersonAddRequest? request = new PersonAddRequest()
@@ -47,16 +47,16 @@ namespace CRUDExample.Tests
 			};
 
 			// Assert
-			Assert.Throws<ArgumentException>(() =>
+			await Assert.ThrowsAsync<ArgumentException>(async () =>
 			{
 				// Act
-				_personsService.AddPerson(request);
+				await _personsService.AddPerson(request);
 			});
 		}
 
 		// When we supply with proper person details, it should insert the person into persons list; and it should return an object of PersonResponse, which includes with the newly generated guid
 		[Fact]
-		public void AddPerson_ProperPersonDetails()
+		public async Task AddPerson_ProperPersonDetails()
 		{
 			// Arrange
 			PersonAddRequest? request = new PersonAddRequest()
@@ -71,9 +71,9 @@ namespace CRUDExample.Tests
 			};
 
 			// Act
-			PersonResponse response = _personsService.AddPerson(request);
+			PersonResponse response = await _personsService.AddPerson(request);
 
-			List<PersonResponse> personsList = _personsService.GetAllPersons();
+			List<PersonResponse> personsList = await _personsService.GetAllPersons();
 
 			// Assert
 			Assert.True(response.PersonID != Guid.Empty);
@@ -86,10 +86,10 @@ namespace CRUDExample.Tests
 
 		// The GetAllPersons() should return an empty list by default
 		[Fact]
-		public void GetAllPersons_EmptyList()
+		public async Task GetAllPersons_EmptyList()
 		{
 			// Act
-			List<PersonResponse> personsResponsesList = _personsService.GetAllPersons();
+			List<PersonResponse> personsResponsesList = await _personsService.GetAllPersons();
 
 			// Assert
 			Assert.Empty(personsResponsesList);
@@ -97,14 +97,14 @@ namespace CRUDExample.Tests
 
 		// The returns list of persons added
 		[Fact]
-		public void GetAllPersons_AddFewPersons()
+		public async Task GetAllPersons_AddFewPersons()
 		{
 			// Arrange
 			CountryAddRequest countryReq1 = new CountryAddRequest() { CountryName = "Cameroon" };
 			CountryAddRequest countryReq2 = new CountryAddRequest() { CountryName = "Canada" };
 
-			CountryResponse countryResponse1 = _countriesService.AddCountry(countryReq1);
-			CountryResponse countryResponse2 = _countriesService.AddCountry(countryReq2);
+			CountryResponse countryResponse1 = await _countriesService.AddCountry(countryReq1);
+			CountryResponse countryResponse2 = await _countriesService.AddCountry(countryReq2);
 
             PersonAddRequest person_request_1 = new PersonAddRequest() { PersonName = "Smith", Email = "smith@example.com", Gender = GenderOptions.Male, Address = "address of smith", CountryID = countryResponse1.CountryID, DateOfBirth = DateTime.Parse("2002-05-06"), ReceiveNewsLetters = true };
 
@@ -118,7 +118,7 @@ namespace CRUDExample.Tests
 
             foreach (PersonAddRequest person_request in person_requests)
             {
-                PersonResponse person_response = _personsService.AddPerson(person_request);
+                PersonResponse person_response = await _personsService.AddPerson(person_request);
                 person_response_list_from_add.Add(person_response);
             }
 
@@ -128,7 +128,7 @@ namespace CRUDExample.Tests
 				_testOutputHelper.WriteLine(person.ToString());
 
 			// Act
-			List<PersonResponse> personsListFromGetAll = _personsService.GetAllPersons();
+			List<PersonResponse> personsListFromGetAll = await _personsService.GetAllPersons();
             _testOutputHelper.WriteLine("Actual : ");
             foreach (PersonResponse person in personsListFromGetAll)
                 _testOutputHelper.WriteLine(person.ToString());

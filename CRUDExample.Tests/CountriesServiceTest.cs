@@ -34,29 +34,29 @@ namespace CRUDExample.Tests
 
 		// When the countryNam is null, it should throw ArgumentException
 		[Fact]
-		public void AddCountry_CountryNameIsNull()
+		public async Task AddCountry_CountryNameIsNull()
 		{
 			// Arrange
 			CountryAddRequest? request = new CountryAddRequest() { CountryName = null };
 
 			// Assert
-			Assert.Throws<ArgumentException>(() =>
+			await Assert.ThrowsAsync<ArgumentException>(async () =>
 			{
 				// Act
-				_countriesService.AddCountry(request);
+				await _countriesService.AddCountry(request);
 			});
 		}
 
 		// When you supply proper country name, it should insert (add) the country to the existing list of countries
 		[Fact]
-		public void AddCountry_ProperCountryDetails()
+		public async Task AddCountry_ProperCountryDetails()
 		{
 			// Arrange
 			CountryAddRequest? request = new CountryAddRequest() { CountryName = "Nigeria" };
 
 			// Act
-			CountryResponse response = _countriesService.AddCountry(request);
-			List<CountryResponse> countries_from_GetAllCountries = _countriesService.GetAllCountries();
+			CountryResponse response = await _countriesService.AddCountry(request);
+			List<CountryResponse> countries_from_GetAllCountries = await _countriesService.GetAllCountries();
 
 			// Assert
 			Assert.True(response.CountryID != Guid.Empty);
@@ -65,18 +65,18 @@ namespace CRUDExample.Tests
 
         // When CountryName is duplicate, it should throw ArgumentException
         [Fact]
-		public void AddCountry_DuplicateCountryName()
+		public async Task AddCountry_DuplicateCountryName()
 		{
 			// Arrage
 			CountryAddRequest? request1 = new CountryAddRequest() { CountryName = "Cameroon" };
 			CountryAddRequest? request2 = new CountryAddRequest() { CountryName = "Cameroon" };
 
 			// Assert
-			Assert.Throws<ArgumentException>(() =>
+			await Assert.ThrowsAsync<ArgumentException>(async () =>
 			{
 				// Act
-				_countriesService.AddCountry(request1);
-				_countriesService.AddCountry(request2);
+				await _countriesService.AddCountry(request1);
+				await _countriesService.AddCountry(request2);
 			});
         }
 
